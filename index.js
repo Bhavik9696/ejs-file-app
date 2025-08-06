@@ -27,6 +27,20 @@ app.get("/file/:filename", (req, res) => {
   });
 });
 
+app.post("/edit/:filename", (req, res) => {
+  const filename = req.params.filename;
+  const updatedContent = req.body.content;
+
+  fs.writeFile(`./files/${filename}`, updatedContent, (err) => {
+    if (err) {
+      return res.send("Error saving file");
+    }
+    res.redirect("/");
+  });
+});
+
+
+
 app.post("/create", (req, res) => {
   const title = req.body.title.trim().split(" ").join("_");
   const details = req.body.details;
